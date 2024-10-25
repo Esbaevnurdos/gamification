@@ -1,0 +1,118 @@
+body{
+    margin: 0 auto;
+    padding: 0;
+        background-color: rgb(240, 240, 240);
+
+    color: black;
+}
+
+@font-face {
+    font-family: myFirstFont;
+    src: url(Poppins-Regular.ttf);
+}
+
+@font-face {
+    font-family: mySecondFont;
+    src: url(Poppins-Bold.ttf);
+}
+
+.main-page{
+    display: flex;
+    align-items: center;
+}
+
+.main-left {
+    max-width: 50%;
+    padding-left: 80px;
+    padding-right: 80px;
+
+}
+
+.main-left h2 {
+    font-weight: 500;
+    font-family: mySecondFont;
+    font-size: 40px;
+    margin: 0;
+}
+
+.main-left h1 {
+    font-weight: 100;
+    font-family: mySecondFont;
+    font-size: 65px;
+    margin: 0;
+}
+
+.main-left p {
+  margin: 0;
+  font-family: myFirstFont;
+ 
+}
+
+.main-left button {
+     font-family: myFirstFont;
+     margin-top: 20px;
+     background-color: #F4B400;
+     color: white;
+     border: none;
+     font-size: 20px;
+     padding: 10px;
+     border-radius: 40px;
+     padding-left: 20px;
+      padding-right: 20px;
+       padding-top: 9px;
+        padding-bottom: 9px;
+        cursor: pointer;
+}
+
+.main-right {
+    min-width: 50%;
+    /* display: flex; */
+    align-items: center;
+    text-align: center;
+}
+
+.main-right .main-img {
+    height: 725px;
+}
+
+.main-right .main-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.navbar {
+    position: absolute;
+    top: 35%;
+    z-index: 10;
+    right: 0;
+    background-color: #F4B400;
+    display: flex;
+    flex-direction: column;
+    border-radius: 40px;
+    gap: 25px;
+    width: 30px;
+    height: 240px;
+    align-items: center;
+    padding: 10px;
+    margin-right: 30px;
+
+
+}
+
+.navbar i {
+    cursor: pointer;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: black;
+    font-size:23px;
+}
+
+
+.navbar a.active {
+      color: white;
+  }
+
