@@ -33,6 +33,9 @@ html {
     align-items: center;
 }
 
+.contact2-text {
+    display: flex; justify-content: space-between; padding-left: 120px; padding-right: 280px; margin-top: 100px;
+}
 
 .about .left-top img {
     width: 100%;
@@ -127,6 +130,10 @@ html {
     color: black;
     font-size:23px;
 }
+ .comp {
+    display: flex;
+    /* flex-direction: column; */
+ }
 
 
 .navbar a.active {
@@ -154,4 +161,408 @@ html {
 @font-face {
     font-family: mySecondFont;
     src: url(Poppins-Bold.ttf);
+}
+
+
+.contact2-text {
+/* display: flex; flex-direction: column;} */
+}
+
+@media (max-width:1285px) {
+ .black-container {
+    /* display: flex;
+    flex-direction: column; */
+ }   
+
+ .right .right-top {
+    width: 100%;
+ }
+
+ .contact2-text {
+    display: flex;
+     justify-content: space-between; 
+     padding-left: 120px;
+      padding-right: 10px;
+       margin-top: 100px;
+}
+
+ .comp {
+    display: flex;
+    flex-direction: column;
+ }
+
+ .contact2-text {
+    display: flex;
+    flex-direction: ;
+ }
+
+ .left {
+    display: none;
+ }
+
+
+ .about .left {
+    width: 20%;
+    max-height: 500px;
+    /* display: block; */
+}
+
+.about .left-top {
+     width: 100%; /* Adjust based on your layout */
+    height: 199px;
+    position: relative;
+     overflow: hidden;
+    align-items: center;
+}
+
+
+.contact1-text {
+    padding-left: 120px;
+    padding-right: 00px;
+}
+
+.about .left-top img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.about .left-bottom {
+    width: 300px;
+    height: 530px;
+    background-color: #F4B400;
+}
+
+
+
+.left-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.left-bottom a {
+    text-decoration: none;
+    color: black;
+    font-family: mySecondFont;
+    font-size: 20px;
+}
+
+.right {
+    width: 80%;
+
+}
+
+.right .right-top  {
+    /* width: 900px; */
+    align-items: center;
+    padding-left: 60px;
+    padding-right: 0px;
+    padding-top: 40px;
+}
+
+
+.right .right-top2  {
+    /* width: 900px; */
+    align-items: center;
+    padding-left: 60px;
+    padding-right: 0px;
+    padding-top: 10px;
+}
+
+.right .right-top2 h1 {
+    font-family: myFirstFont;
+    font-weight: 100;
+}
+
+.right .right-top h1 {
+    text-align: center;
+    font-size: 60px;
+    font-family: mySecondFont;
+    letter-spacing: 2px;
+    border: 2px solid black;
+    /* width: 1000px; */
+    margin: 0;
+}
+}
+
+
+
+/* @media (max-width:1090px) {
+ .black-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+ }   
+
+ .left {
+    display: none;
+ }
+ .black-do {
+    margin-left: 100px;
+ }
+
+ .right .right-top {
+    width: 100%;
+ }
+
+  .right .right-top2 {
+    width: 100%;
+ }
+} */
+
+
+@media (max-width:800px) {
+
+ .navbar {
+    position: fixed;
+    top: 35%;
+    z-index: 10;
+    right: 0;
+    background-color: #F4B400;
+    display: flex;
+    flex-direction: column;
+    border-radius: 40px;
+    gap: 25px;
+    width: 30px;
+    height: 240px;
+    align-items: center;
+    padding: 10px;
+    margin-right: 20px;
+}
+
+ .contact2-text {
+    display: flex;
+     justify-content: space-between; 
+     flex-direction: row;
+     text-align: center;
+     align-items: center;
+     padding-left: 40px;
+      padding-right: 0px;
+       margin-top: 100px;
+}
+
+ .comp {
+    display: flex;
+    flex-direction: column;
+ }
+
+ .contact2-text {
+    display: flex;
+    flex-direction: ;
+ }
+
+
+ .left {
+    display: none;
+ }
+
+
+ .about .left {
+    width: 20%;
+    max-height: 500px;
+    /* display: block; */
+}
+
+.about .left-top {
+     width: 100%; /* Adjust based on your layout */
+    height: 199px;
+    position: relative;
+     overflow: hidden;
+    align-items: center;
+}
+
+
+.contact1-text {
+    padding-left: 40px;
+    padding-right: 00px;
+}
+
+
+}
+
+
+@media (max-width:800px) {
+
+ .navbar {
+    position: fixed;
+    top: 35%;
+    z-index: 10;
+    right: 0;
+    background-color: #F4B400;
+    display: flex;
+    flex-direction: column;
+    border-radius: 40px;
+    gap: 25px;
+    width: 30px;
+    height: 240px;
+    align-items: center;
+    padding: 10px;
+    margin-right: 20px;
+}
+
+.right .right-top  {
+    /* width: 900px; */
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 0px;
+    padding-top: 10px;
+}
+
+}
+
+
+@media (max-width:600px) {
+
+
+ .navbar {
+    position: fixed;
+    top: 35%;
+    z-index: 10;
+    right: 0;
+    background-color: #F4B400;
+    display: flex;
+    flex-direction: column;
+    border-radius: 40px;
+    gap: 25px;
+    width: 30px;
+    height: 240px;
+    align-items: center;
+    padding: 10px;
+    margin-right: 20px;
+}
+
+
+ .contact2-text {
+    display: flex;
+     justify-content: center; 
+     flex-direction: column;
+     text-align: center;
+     align-items: center;
+     padding-left: 40px;
+      padding-right: 0px;
+       margin-top: 100px;
+       gap: 30px;
+}
+
+ .right-top h1 {
+    font-size: 10px;
+ }
+
+
+.resume-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left: 20px;
+    margin-right: 0px;
+}
+
+.resume-top {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.resume-top-1 h1, .resume-top-1 p {
+    margin: 0;
+    padding: 0;
+}
+
+ .about .left {
+    width: 20%;
+    max-height: 500px;
+    /* display: block; */
+}
+
+.about .left-top {
+     width: 100%; /* Adjust based on your layout */
+    height: 199px;
+    position: relative;
+     overflow: hidden;
+    align-items: center;
+}
+
+
+.about .left-top img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.about .left-bottom {
+    width: 300px;
+    height: 530px;
+    background-color: #F4B400;
+}
+
+
+
+.left-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.left-bottom a {
+    text-decoration: none;
+    color: black;
+    font-family: mySecondFont;
+    font-size: 20px;
+}
+
+.right {
+    width: 80%;
+
+}
+
+.right .right-top  {
+    /* width: 900px; */
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 0px;
+    width: 100%;
+    padding-top: 40px;
+}
+
+
+.right .right-top2  {
+    /* width: 900px; */
+    align-items: center;
+    padding-left: 60px;
+    padding-right: 0px;
+    padding-top: 10px;
+}
+
+.right .right-top2 h1 {
+    font-family: myFirstFont;
+    font-weight: 100;
+}
+
+.right .right-top h1 {
+    text-align: center;
+    font-size: 60px;
+    font-family: mySecondFont;
+    letter-spacing: 2px;
+    border: 2px solid black;
+    /* width: 1000px; */
+    margin: 0;
+}
+
+.right .right-top h1 {
+    text-align: center;
+    font-size: 40px;
+    font-family: mySecondFont;
+    letter-spacing: 2px;
+    border: 2px solid black;
+    /* width: 1000px; */
+    margin: 0;
+}
+
 }
