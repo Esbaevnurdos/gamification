@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Movie Library</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="library-section">
+    <h2>My Movie Library</h2>
+    <button onclick="logout()">Logout</button>
+    <form id="add-movie-form">
+      <input type="text" id="movie-title" placeholder="Title" required>
+      <input type="text" id="movie-genre" placeholder="Genre" required>
+      <input type="number" id="movie-rating" placeholder="Rating (1-5)" min="1" max="5" required>
+      <button type="submit">Add Movie</button>
+    </form>
+    
+    <div id="filters">
+      <button onclick="filterMovies('all')">All</button>
+      <button onclick="filterMovies('watched')">Watched</button>
+      <button onclick="filterMovies('unwatched')">Unwatched</button>
+    </div>
+    
+    <div id="movies-list"></div>
+    <div id="error-message" style="color: red;"></div>
+  </div>
+
+  <!-- Modal for Editing Movie -->
+  <div id="edit-modal" style="display:none;">
+    <h3>Edit Movie</h3>
+    <input type="text" id="edit-title" placeholder="Title" required>
+    <input type="text" id="edit-genre" placeholder="Genre" required>
+    <input type="number" id="edit-rating" placeholder="Rating (1-5)" min="1" max="5" required>
+    <label>
+      <input type="checkbox" id="edit-watched"> Watched
+    </label>
+    <button onclick="saveMovieChanges()">Save Changes</button>
+    <button onclick="closeEditModal()">Cancel</button>
+  </div>
+
+  <script>
+    const moviesURL = 'https://673327302a1b1a4ae1124513.mockapi.io/movies';
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) {
+      window.location.href = 'login.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('add-movie-form').addEventListener('submit', addMovie);
+      loadMovies();
+    });
+
+    async function loadMovies(filter = 'all') {
+      try {
+        const response = await fetch(`${moviesURL}?userId=${userId}`);
+        const movies = await response.json();
+        const moviesList = document.getElementById('movies-list');
+        moviesList.innerHTML = '';
+
+        const filteredMovies = movies.filter(movie =>
+          filter === 'all' || 
+          (filter === 'watched' && movie.watched) || 
+          (filter === 'unwatched' && !movie.watched)
+        );
+
+        if (filteredMovies.length === 0) {
+          moviesList.innerHTML = '<p>No movies found.</p>';
+        } else {
+          filteredMovies.forEach(movie => {
+            const movieCard = document.createElement('div');
+            movieCard.className = `movie-card ${movie.watched ? 'watched' : ''}`;
+            movieCard.innerHTML = `
+              <div>
+                <strong>${movie.title}</strong> - ${movie.genre}
+                <span class="star">${'★'.repeat(movie.rating)}</span>
+              </div>
+              <div>
+                <button onclick="toggleWatched('${movie.id}', ${movie.watched})">${movie.watched ? 'Unwatch' : 'Watch'}</button>
+                <button onclick="openEditModal('${movie.id}', '${movie.title}', '${movie.genre}', ${movie.rating}, ${movie.watched})">Edit</button>
+                <button onclick="deleteMovie('${movie.id}')">Delete</button>
+              </div>
+            `;
+            moviesList.appendChild(movieCard);
+          });
+        }
+      } catch (error) {
+        showError('Error loading movies');
+        console.error('Error loading movies', error);
+      }
+    }
+
+    async function addMovie(event) {
+      event.preventDefault();
+      const title = document.getElementById('movie-title').value;
+      const genre = document.getElementById('movie-genre').value;
+      const rating = parseInt(document.getElementById('movie-rating').value);
+
+      if (!title || !genre || isNaN(rating) || rating < 1 || rating > 5) {
+        showError('Please fill out the form correctly!');
+        return;
+      }
+
+      try {
+        const response = await fetch(moviesURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId, title, genre, rating, watched: false })
+        });
+        if (response.ok) {
+          loadMovies();
+          document.getElementById('add-movie-form').reset();
+        } else {
+          showError('Error adding movie');
+        }
+      } catch (error) {
+        showError('Error adding movie');
+        console.error('Error adding movie', error);
+      }
+    }
+
+    async function toggleWatched(id, watched) {
+      try {
+        await fetch(`${moviesURL}/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ watched: !watched })
+        });
+        loadMovies();
+      } catch (error) {
+        showError('Error updating movie');
+        console.error('Error updating movie', error);
+      }
+    }
+
+    async function deleteMovie(id) {
+      try {
+        await fetch(`${moviesURL}/${id}`, { method: 'DELETE' });
+        loadMovies();
+      } catch (error) {
+        showError('Error deleting movie');
+        console.error('Error deleting movie', error);
+      }
+    }
+
+    function openEditModal(id, title, genre, rating, watched) {
+      document.getElementById('edit-modal').style.display = 'block';
+      document.getElementById('edit-title').value = title;
+      document.getElementById('edit-genre').value = genre;
+      document.getElementById('edit-rating').value = rating;
+      document.getElementById('edit-watched').checked = watched;
+      document.getElementById('edit-modal').setAttribute('data-movie-id', id);
+    }
+
+    function closeEditModal() {
+      document.getElementById('edit-modal').style.display = 'none';
+    }
+
+    async function saveMovieChanges() {
+      const id = document.getElementById('edit-modal').getAttribute('data-movie-id');
+      const title = document.getElementById('edit-title').value;
+      const genre = document.getElementById('edit-genre').value;
+      const rating = parseInt(document.getElementById('edit-rating').value);
+      const watched = document.getElementById('edit-watched').checked;
+
+      if (!title || !genre || isNaN(rating) || rating < 1 || rating > 5) {
+        showError('Please fill out the form correctly!');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${moviesURL}/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, genre, rating, watched })
+        });
+        if (response.ok) {
+          closeEditModal();
+          loadMovies();
+        } else {
+          showError('Error updating movie');
+        }
+      } catch (error) {
+        showError('Error updating movie');
+        console.error('Error updating movie', error);
+      }
+    }
+
+    function filterMovies(filter) {
+      loadMovies(filter);
+    }
+
+    function logout() {
+      localStorage.removeItem('userId');
+      window.location.href = 'login.html';
+    }
+
+    function showError(message) {
+      document.getElementById('error-message').textContent = message;
+      setTimeout(() => {
+        document.getElementById('error-message').textContent = '';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

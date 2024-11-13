@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration and Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+        .font-family-karla {
+            font-family: karla;
+        }
+        
+        #registerFormContainer{
+
+        }
+    </style>
+</head>
+<body class="bg-white font-family-karla h-screen">
+  <!-- <h2 id="formTitle">Register</h2> -->
+  <!-- <div class="flex items-center justify-center min-h-screen"> -->
+  <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-32 px-8 md:px-24 lg:px-64" id="registerFormContainer">
+      <p class="text-center text-3xl">Welcome.</p>
+    <form class="flex flex-col pt-3 md:pt-8"  id="registerForm">
+      <label class="text-lg" for="regUsername">Username:</label>
+      <input type="text" id="regUsername" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
+      <label for="regPassword" class="text-lg">Password:</label>
+      <input type="password" id="regPassword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" required>
+      <button type="submit" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8">Register</button>
+    </form>
+    <p class="text-center pt-12 pb-12">Already have an account? <a href="#" onclick="toggleForms()" class="underline font-semibold">Login here</a></p>
+  </div>
+  <!-- </div> -->
+
+  <div id="loginFormContainer" style="display: none;"  class="flex flex-col justify-center md:justify-start my-auto pt-8  md:pt-32 px-8 md:px-24 lg:px-64">
+    <p class="text-center text-3xl">Join Us.</p>
+    <form id="loginForm"  class="flex flex-col pt-3 md:pt-8">
+      <label for="loginUsername"  class="text-lg">Username:</label>
+      <input type="text" id="loginUsername" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"  required>
+      <label for="loginPassword"  class="text-lg">Password:</label>
+      <input type="password" id="loginPassword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" required>
+      <button type="submit" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8">Login</button>
+    </form>
+    <p class="text-center pt-12 pb-12">Don't have an account? <a href="#" onclick="toggleForms()" class="underline font-semibold">Register here</a></p>
+  </div>
+
+  <script>
+    const API_BASE_URL = 'https://67332c8e2a1b1a4ae11260f4.mockapi.io/users';
+
+    async function registerUser(username, password) {
+      try {
+        const response = await fetch(`${API_BASE_URL}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        if (response.ok) {
+          alert('Registration successful!');
+        } else {
+          alert('Registration failed');
+        }
+      } catch (error) {
+        console.error('Error during registration:', error);
+      }
+    }
+
+    async function loginUser(username, password) {
+      try {
+        const response = await fetch(`${API_BASE_URL}`);
+        const users = await response.json();
+
+        const user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+          alert('Login successful!');
+          console.log('Logged in User:', user);
+
+          // Store user ID in localStorage for library page access
+          localStorage.setItem('userId', user.id);
+
+          // Redirect to library.html
+          window.location.href = 'library.html';
+        } else {
+          alert('Invalid username or password');
+        }
+      } catch (error) {
+        console.error('Error during login:', error);
+      }
+    }
+
+
+      function toggleForms() {
+      const registerFormContainer = document.getElementById('registerFormContainer');
+      const loginFormContainer = document.getElementById('loginFormContainer');
+      const formTitle = document.getElementById('formTitle');
+
+      if (registerFormContainer.style.display === 'none') {
+        registerFormContainer.style.display = 'block';
+        loginFormContainer.style.display = 'none';
+        formTitle.textContent = 'Register';
+      } else {
+        registerFormContainer.style.display = 'none';
+        loginFormContainer.style.display = 'block';
+        formTitle.textContent = 'Login';
+      }
+    }
+
+
+
+    document.getElementById('registerForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const username = document.getElementById('regUsername').value;
+      const password = document.getElementById('regPassword').value;
+      registerUser(username, password);
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      loginUser(username, password);
+    });
+  </script>
+</body>
+</html>
